@@ -6,7 +6,7 @@ export class TableSelection {
         this.curren = null
     }
     
-    // $el instanceof DOM === true
+    // $el instanceof DOM === true (т к начинается с $)
     select($el) {
         this.clear()
         $el.focus().addClass('selected')
