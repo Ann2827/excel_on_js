@@ -3,7 +3,7 @@ export class TableSelection {
 
     constructor() {
       this.group = []
-      this.curren = null
+      this.current = null
     }
 
     // $el instanceof DOM === true (т к начинается с $)
@@ -11,7 +11,7 @@ export class TableSelection {
       this.clear()
       $el.focus().addClass('selected')
       this.group.push($el)
-      this.curren = $el
+      this.current = $el
     }
 
     clear() {

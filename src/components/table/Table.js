@@ -31,17 +31,18 @@ export class Table extends ExcelComponent {
       this.selectCell(this.$root.find('[data-id="0:0"]'))
 
       this.$on('formula:input', text => {
-        this.selection.curren.text(text)
+        this.selection.current.text(text)
+        this.updateTextInStore(text)
       })
-      // this.$subscribe(state => {
-      //     console.log('TableState', state)
-      // })
+
+      this.$on('formula:done', () => {
+        this.selection.current.focus()
+      }) // TODO: перевод каретки в конец строки?
     }
 
     selectCell($cell) {
       this.selection.select($cell)
       this.$emit('table:select', $cell)
-      // this.$dispatch({type: 'TEST'})
     }
 
     async resizeTable(event) {
@@ -59,16 +60,13 @@ export class Table extends ExcelComponent {
       } else if (isCell(event)) {
         const $target = $(event.target)
         if (event.shiftKey) {
-          const $cells = matrix($target, this.selection.curren)
+          const $cells = matrix($target, this.selection.current)
               .map(id => this.$root.find(`[data-id="${id}"]`))
           this.selection.selectGroup($cells)
         } else {
           this.selectCell($target)
         }
       }
-      this.$on('formula:done', () => {
-        this.selection.curren.focus()
-      })
     }
 
     onKeydown(event) {
@@ -83,13 +81,21 @@ export class Table extends ExcelComponent {
       const {key} = event
       if (keys.includes(key) && !event.shiftKey) {
         event.preventDefault()
-        const id = this.selection.curren.id(true)
+        const id = this.selection.current.id(true)
         const $next = this.$root.find(nextSelector(key, id))
         this.selectCell($next)
       }
     }
 
+    updateTextInStore(value) {
+      this.$dispatch(actions.changeText({
+        id: this.selection.current.id(),
+        value
+      }))
+    }
+
     onInput(event) {
-      this.$emit('table:input', $(event.target))
+      // this.$emit('table:input', $(event.target))
+      this.updateTextInStore($(event.target).text())
     }
 }
