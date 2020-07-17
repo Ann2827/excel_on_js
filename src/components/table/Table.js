@@ -5,6 +5,7 @@ import {resizeHandler} from './table.resize'
 import {shouldResize, isCell, matrix, nextSelector} from './table.functions'
 import {TableSelection} from '@/components/table/TableSelection'
 import * as actions from '@/redux/actions'
+import {defaultStyles} from '@/constants'
 
 export class Table extends ExcelComponent {
     static className = 'excel__table'
@@ -38,11 +39,16 @@ export class Table extends ExcelComponent {
       this.$on('formula:done', () => {
         this.selection.current.focus()
       }) // TODO: перевод каретки в конец строки?
+
+      this.$on('toolbar:applyStyle', style => {
+        this.selection.applyStyle(style)
+      })
     }
 
     selectCell($cell) {
       this.selection.select($cell)
       this.$emit('table:select', $cell)
+      $cell.getStyles(Object.keys(defaultStyles))
     }
 
     async resizeTable(event) {
