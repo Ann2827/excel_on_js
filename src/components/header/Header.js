@@ -14,11 +14,11 @@ export class Header extends ExcelComponent {
         ...options
       })
     }
-    
-    prepare () {
-        this.onInput = debounce(this.onInput, 300)
+
+    prepare() {
+      this.onInput = debounce(this.onInput, 300)
     }
-    
+
     toHTML() {
       const title = this.store.getState().title || defaultTitle
       return `
