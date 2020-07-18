@@ -40,15 +40,20 @@ export class Table extends ExcelComponent {
         this.selection.current.focus()
       }) // TODO: перевод каретки в конец строки?
 
-      this.$on('toolbar:applyStyle', style => {
-        this.selection.applyStyle(style)
+      this.$on('toolbar:applyStyle', value => {
+        this.selection.applyStyle(value)
+        this.$dispatch(actions.applyStyle({
+          value,
+          ids: this.selection.selectedIds
+        }))
       })
     }
 
     selectCell($cell) {
       this.selection.select($cell)
       this.$emit('table:select', $cell)
-      $cell.getStyles(Object.keys(defaultStyles))
+      const styles = $cell.getStyles(Object.keys(defaultStyles))
+      this.$dispatch(actions.changeStyles(styles))
     }
 
     async resizeTable(event) {
