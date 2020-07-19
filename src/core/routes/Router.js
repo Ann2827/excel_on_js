@@ -1,5 +1,8 @@
-import {$} from '@core/dom'
-import {ActiveRoute} from '@core/routes/ActiveRoute'
+// import {$} from '@core/dom'
+// import {ActiveRoute} from '@core/routes/ActiveRoute'
+// TODO: find for testing something with alias
+import {$} from '../dom'
+import {ActiveRoute} from './ActiveRoute'
 
 export class Router {
   constructor(selector, routes) {
