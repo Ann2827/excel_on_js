@@ -3,7 +3,9 @@
   "env": {
     "es6": true,
     "browser": true,
-    "node": true
+    "node": true,
+    "jest/globals": true,
+    "jest": true
   },
   "rules": {
     "semi": "off",
@@ -11,6 +13,7 @@
     "comma-dangle": "off",
     "require-jsdoc": "off"
   },
+  "plugins": ["jest"],
   "extends": [
     "eslint:recommended", "google"
   ]
