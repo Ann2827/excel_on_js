@@ -55,5 +55,5 @@ export function clone(obj) {
 }
 
 export function preventDefault(event) {
-    event.preventDefault()
+  event.preventDefault()
 }

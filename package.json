@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "cross-env NODE_ENV=development webpack-dev-server --open --fix",
     "build": "cross-env NODE_ENV=production webpack --mode production",
-    "fix-js": "eslint-auto-fix --verbose"
+    "fix-js": "eslint-auto-fix --verbose",
+    "lint": "npx eslint ./src --fix"
   },
   "repository": {
     "type": "git",
