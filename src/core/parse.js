@@ -1,7 +1,8 @@
 export function parse(value = '') {
   if (value.startsWith('=')) {
     try {
-      const test = eval(value.slice(1)) // TODO: сделать по enter, сломалася обратная связь
+      const test = eval(value.slice(1))
+      // TODO: сделать по enter, сломалася обратная связь
       console.log(test)
       return test
     } catch (e) {
