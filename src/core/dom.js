@@ -25,7 +25,7 @@ class Dom {
   }
 
   clear() {
-    this.html('')
+    this.html('');
     return this
   }
 
