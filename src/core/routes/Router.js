@@ -1,8 +1,10 @@
 // import {$} from '@core/dom'
 // import {ActiveRoute} from '@core/routes/ActiveRoute'
+// import {Loader} from '@/components/Loader'
 // TODO: find for testing something with alias
 import {$} from '../dom'
 import {ActiveRoute} from './ActiveRoute'
+import {Loader} from '../../components/Loader'
 
 export class Router {
   constructor(selector, routes) {
@@ -10,6 +12,8 @@ export class Router {
 
     this.$placeholder = $(selector)
     this.routes = routes
+
+    this.loader = new Loader()
 
     this.page = null
 
@@ -23,18 +27,28 @@ export class Router {
     this.changePageHandler()
   }
 
-  changePageHandler() {
-    if (this.page) this.page.destroy()
-    this.$placeholder.clear()
+  async changePageHandler() {
+    try {
+      if (this.page) this.page.destroy()
 
-    const Page = ActiveRoute.path.includes('excel') ?
-          this.routes.excel :
-          this.routes.dashboard
-    this.page = new Page(ActiveRoute.param)
+      // if (this.$placeholder) this.$placeholder.clear()
+      this.$placeholder.clear()
+          .append(this.loader)
 
-    this.$placeholder.append(this.page.getRoot())
+      const Page = ActiveRoute.path.includes('excel') ?
+              this.routes.excel :
+              this.routes.dashboard
+      this.page = new Page(ActiveRoute.param)
 
-    this.page.afterRender()
+      const root = await this.page.getRoot()
+      // if (this.$placeholder) this.$placeholder.clear()
+      this.$placeholder.clear()
+          .append(root)
+
+      this.page.afterRender()
+    } catch (e) {
+      console.warn('Error in changePageHandler', e.message)
+    }
   }
 
   destroy() {
